@@ -14,8 +14,6 @@ export default function Login(props) {
 
     const navigate = useNavigate();
 
-    console.log(process.env.REACT_APP_BACKEND)
-
     const goToRegister = () => {
         navigate('/register')
     }

@@ -14,7 +14,6 @@ export default function Profile(props) {
 
     if (!loading) {
         user = props.allUsers.find(u => u.username === username)
-        console.log(user)
     }
 
     useEffect(() => {
@@ -38,7 +37,12 @@ export default function Profile(props) {
         <div>
             <MapVerifier longitude={user.longitude} latitude={user.latitude} anchor="bottom" />
             <div className="d-flex flex-column justify-content-start col-12 col-lg-8 offset-lg-2">
-                <h2 className="mt-4 mb-4 text-center card-text fw-bold">Hi, {user.firstName}</h2>
+                {user.username === props.user.username &&
+                    <h2 className="mt-4 mb-4 text-center card-text fw-bold">
+                        Hi, {user.firstName}</h2>}
+                {user.username !== props.user.username &&
+                    <h2 className="mt-4 mb-4 text-center card-text fw-bold">
+                        Viewing {user.firstName}'s profile</h2>}
                 <ul className="list-group primary-border">
                     <li className="list-group-item card-text d-flex justify-content-between"><b>Name:</b> <span>{user.firstName} {user.lastName}</span></li>
                     <li className="list-group-item card-text d-flex justify-content-between"><b>Username:</b> <span>{user.username}</span></li>

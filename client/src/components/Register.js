@@ -24,8 +24,6 @@ export default function Register(props) {
 
     const geoLocatorUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}&autocomplete=true`
 
-    console.log(process.env.REACT_APP_MAPBOX_TOKEN)
-
     const navigate = useNavigate();
 
     const goToLogin = () => {
@@ -54,7 +52,6 @@ export default function Register(props) {
                 const response = fetch(geoLocatorUrl)
                     .then(response => response.json())
                     .then(res => {
-                        console.log(res)
                         if (res.features.length) {
                             const longitude = res.features[0].center[0]
                             const latitude = res.features[0].center[1]

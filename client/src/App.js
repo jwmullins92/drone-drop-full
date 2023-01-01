@@ -45,7 +45,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log(currentUser)
     if (currentUser) {
       setLoggedIn(true)
     } else {
