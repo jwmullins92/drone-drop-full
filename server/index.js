@@ -50,7 +50,7 @@ app.get("/api", (req, res) => {
 
 app.get('/users', async (req, res) => {
     try {
-        const users = await UserModel.find();
+        const users = await UserModel.find().select('-password');
         res.json(users)
     } catch (err) {
         res.status(500).json({ messgae: err.messgae })
@@ -59,7 +59,7 @@ app.get('/users', async (req, res) => {
 
 app.get('/user/:username', async (req, res) => {
     try {
-        const user = await UserModel.findOne({ username: req.params.username });
+        const user = await UserModel.findOne({ username: req.params.username }).select("-password");
         res.json(user)
     } catch (err) {
         res.status(500).json({ messgae: err.messgae })
@@ -68,18 +68,21 @@ app.get('/user/:username', async (req, res) => {
 
 app.post("/login", async (req, res) => {
     const { username, password } = req.body
+    console.log(username, password)
     const user = await UserModel.findOne({ username })
+    console.log(user)
     if (user) {
-        bcrypt.compare(password, user.password, (err, result) => {
+        bcrypt.compare(password, user.password, async (err, result) => {
             if (result) {
-                req.session.user = user
-                res.send(user)
+                currentUser = await UserModel.findOne({ username }).select('-password')
+                req.session.user = currentUser
+                res.send(currentUser)
             } else {
-                res.send("Invalid username or password")
+                res.send({ message: "Invalid username or password" })
             }
         })
     } else {
-        res.send("Invalid username or password")
+        res.send({ message: "Invalid username or password" })
     }
 })
 

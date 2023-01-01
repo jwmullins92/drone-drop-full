@@ -28,6 +28,8 @@ function App() {
   let path = window.localStorage.getItem('path')
   let location = JSON.parse(path)
 
+  console.log(currentUser)
+
 
   useEffect(() => {
     const getAllUsers = async () => {

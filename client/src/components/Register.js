@@ -31,6 +31,11 @@ export default function Register(props) {
     }
 
     const retryRegister = () => {
+        setUsername('')
+        setPassword('')
+        setFirstName('')
+        setLastName('')
+        setAddress('')
         props.logout()
         try {
             fetch(process.env.REACT_APP_BACKEND + `/user/${username}`, { method: 'DELETE' })

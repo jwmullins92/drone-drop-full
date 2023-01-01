@@ -11,6 +11,7 @@ export default function Login(props) {
     const [failedLogin, setFailedLogin] = useState(false)
     const [emptyUserBox, setEmptyUserBox] = useState(false)
     const [emptyPasswordBox, setEmptyPasswordBox] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
 
     const navigate = useNavigate();
 
@@ -36,9 +37,12 @@ export default function Login(props) {
                 })
                     .then(response => response.json())
                     .then(res => {
-                        if (res) {
+                        if (res.username) {
                             props.login(res)
                             navigate('/')
+                        } else {
+                            setErrorMessage(res.message)
+                            setFailedLogin(true);
                         }
                     })
             } catch (err) {
@@ -53,7 +57,7 @@ export default function Login(props) {
                 {/* <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" className="card-img-top" /> */}
                 <div className="card-body d-flex flex-column card-color-md">
                     {failedLogin && <div className="alert alert-danger alert-dismissible fade show" role="alert">
-                        Incorrect username or password
+                        {errorMessage}
                         <button onClick={(e) => setFailedLogin(false)} type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>}
                     <h5 className="fs-2 mb-3 card-title card-text text-center">Login to Drone Drop Delivery</h5>
