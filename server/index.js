@@ -66,14 +66,6 @@ app.get('/user/:username', async (req, res) => {
     }
 })
 
-app.get("/login", async (req, res) => {
-    if (req.session.user) {
-        res.send({ loggedIn: true, user: req.session.user })
-    } else {
-        res.send({ loggedIn: false })
-    }
-})
-
 app.post("/login", async (req, res) => {
     const { username, password } = req.body
     const user = await UserModel.findOne({ username })
