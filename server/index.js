@@ -68,9 +68,7 @@ app.get('/user/:username', async (req, res) => {
 
 app.post("/login", async (req, res) => {
     const { username, password } = req.body
-    console.log(username, password)
     const user = await UserModel.findOne({ username })
-    console.log(user)
     if (user) {
         bcrypt.compare(password, user.password, async (err, result) => {
             if (result) {
