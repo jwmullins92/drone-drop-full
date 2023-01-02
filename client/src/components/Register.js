@@ -37,14 +37,7 @@ export default function Register(props) {
         setLastName('')
         setAddress('')
         props.logout()
-        try {
-            fetch(process.env.REACT_APP_BACKEND + `/user/${username}`, { method: 'DELETE' })
-                .then(
-                    setLoading(true)
-                )
-        } catch (err) {
-            console.log(err)
-        }
+        setLoading(true)
     }
 
     const verifyUser = async (e) => {
@@ -72,7 +65,6 @@ export default function Register(props) {
 
                             if (!props.allUsers.find(user => user.username === username)) {
                                 setNewUser(user)
-                                props.loginNewUser(user)
                                 setLoading(false);
                             } else {
                                 setUsernameTaken(true)

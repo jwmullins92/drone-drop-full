@@ -59,7 +59,7 @@ function App() {
     setCurrentUser(user)
   }
 
-  const getUser = async (user) => {
+  const addUser = (user) => {
     const { username, password, firstName, lastName, address, longitude, latitude } = user;
     try {
       const response = axios.post(process.env.REACT_APP_BACKEND + '/user', {
@@ -75,9 +75,6 @@ function App() {
     } catch (err) {
       console.error(err)
     }
-  }
-
-  const addUser = (user) => {
     const newAllUsers = allUsers.slice();
     newAllUsers.push(user)
     setLoggedIn(true)
@@ -113,7 +110,7 @@ function App() {
       <Navbar isLoggedIn={loggedIn} user={currentUser} logout={logout} />
       <Routes>
         <Route path="login" element={!loggedIn ? <Login loggedIn={loggedIn} login={login} /> : <Navigate to={location} />} />
-        <Route path="register" element={!loggedIn ? <Register addUser={addUser} allUsers={allUsers} logout={logout} loginNewUser={getUser} /> : <Navigate to={location} />} />
+        <Route path="register" element={!loggedIn ? <Register addUser={addUser} allUsers={allUsers} logout={logout} /> : <Navigate to={location} />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
